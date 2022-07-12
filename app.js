@@ -59,7 +59,7 @@ app.get('/todos/:id/edit',(req,res) => {
         .catch(error => console.log(error))
 })
 
-app.post('/todos/:id/edit',(req,res) => {
+app.put('/todos/:id',(req,res) => {
     const id = req.params.id
     const {name,isDone} = req.body
     return Todo.findByPk(id)
@@ -72,7 +72,7 @@ app.post('/todos/:id/edit',(req,res) => {
         .catch(error => console.log(error))
 })
 
-app.post('/todos/:id/delete',(req,res) => {
+app.delete('/todos/:id',(req,res) => {
     const id = req.params.id
     return Todo.findByPk(id)
                     .then(todo => {
