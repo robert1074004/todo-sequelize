@@ -34,6 +34,17 @@ app.get('/',(req,res) => {
         .catch((error) => {return res.status(422).json(error)})
 })
 
+app.get('/todos/new',(req,res) => {
+    res.render('new')
+})
+
+app.post('/todos',(req,res) => {
+    const name = req.body.name
+    Todo.create({name,UserId:7})
+            .then(() => res.redirect('/'))
+            .catch(err => console.log(err))
+})
+
 app.get('/todos/:id',(req,res) => {
     const id = req.params.id
     return Todo.findByPk(id)
@@ -59,6 +70,16 @@ app.post('/todos/:id/edit',(req,res) => {
         })
         .then(() => res.redirect(`/todos/${id}`))
         .catch(error => console.log(error))
+})
+
+app.post('/todos/:id/delete',(req,res) => {
+    const id = req.params.id
+    return Todo.findByPk(id)
+                    .then(todo => {
+                        todo.destroy()
+                    })
+                    .then(() => res.redirect('/'))
+                    .catch(err => console.log(err))
 })
 
 app.get('/users/login',(req,res) => {
