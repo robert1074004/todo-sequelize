@@ -6,7 +6,10 @@ const routes = require('./routes')
 const usePassport = require('./config/passport')
 const flash = require('connect-flash')
 const app = express()
-const PORT = 3000
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+
 
 app.engine('hbs',exphbs({defaultLayout:'main',extname:'.hbs'}))
 app.set('view engine','hbs')
@@ -34,6 +37,6 @@ app.use((req,res,next) => {
 app.use(routes)
 
 
-app.listen(PORT,() => {
-    console.log(`App is running on http://localhost:${PORT}`)
+app.listen(process.env.PORT,() => {
+    console.log(`App is running on http://localhost:${process.env.PORT}`)
 })
